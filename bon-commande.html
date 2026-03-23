@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bon de commande — SIPAMO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --black:     #000000;
+      --dark:      #2a2a2a;
+      --mid:       #555555;
+      --light:     #f4f3f1;
+      --border:    #e0e0e0;
+      --gold:      #d4a017;
+      --red:       #c0392b;
+      --green:     #27ae60;
+      --font:      'Jost', sans-serif;
+    }
+
+    body {
+      background: var(--light);
+      margin: 0;
+      padding: 30px 16px 60px;
+      font-family: var(--font);
+      color: var(--dark);
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── PAGE ── */
+    .page {
+      background: #fff;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 32px 36px;
+      box-shadow: 0 2px 40px rgba(0,0,0,0.07);
+    }
+
+    /* ── EN-TÊTE ── */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--black);
+      margin-bottom: 28px;
+    }
+
+    .brand-logo {
+      font-size: 32px;
+      font-weight: 200;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--black);
+    }
+
+    .brand-tagline {
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: #2a2a2a;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    .doc-meta {
+      text-align: right;
+      font-size: 11px;
+      color: #2a2a2a;
+      line-height: 1.9;
+    }
+
+    .doc-meta .doc-type {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--dark);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .doc-meta a { color: inherit; text-decoration: none; }
+
+    /* ── INFOS SOCIÉTÉ (sous l'en-tête) ── */
+    .company-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+
+    .company-block, .client-block {
+      font-size: 11px;
+      color: #2a2a2a;
+      line-height: 1.8;
+    }
+
+    .company-block strong, .client-block strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+
+    .client-block {
+      text-align: right;
+      padding: 12px 16px;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      min-width: 220px;
+    }
+
+    .client-block .client-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #aaa;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    /* ── BADGE PROVISOIRE ── */
+    .badge-provisoire {
+      display: inline-block;
+      background: #fff8e6;
+      border: 1px solid #f0c040;
+      color: #b07800;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #2a2a2a;
+      margin-bottom: 14px;
+      font-weight: 400;
+    }
+
+    /* ── TABLEAU ARTICLES ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    thead th {
+      text-align: left;
+      font-weight: 400;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #2a2a2a;
+      border-bottom: 1px solid var(--border);
+      padding: 0 0 10px;
+    }
+
+    thead th.r { text-align: right; }
+    thead th.c { text-align: center; }
+
+    tbody td {
+      padding: 13px 0;
+      border-bottom: 1px solid #f2f2f2;
+      vertical-align: top;
+    }
+
+    .item-name    { font-weight: 400; color: var(--dark); }
+    .item-details { font-size: 11px; color: #555; margin-top: 3px; }
+    .r            { text-align: right; }
+    .c            { text-align: center; }
+    .col-qty      { width: 50px; }
+    .col-pu       { width: 130px; }
+    .col-total    { width: 130px; }
+
+    /* ── TOTAUX ── */
+    .totals-block {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1.5px solid var(--black);
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: #2a2a2a;
+    }
+
+    .total-row.remise span:last-child { color: var(--red); font-weight: 500; }
+
+    .total-row.livraison span:last-child { color: var(--gold); font-weight: 600; }
+
+    .total-row.gratuit span:last-child { color: var(--green); font-weight: 600; }
+
+    .total-row.net {
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--black);
+      border-top: 1px solid #eee;
+      padding-top: 14px;
+      margin-top: 6px;
+    }
+
+    /* ── PROMOTION NOTE ── */
+    #promo-note {
+      font-size: 11px;
+      color: var(--gold);
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    /* ── DIVIDER ── */
+    hr.divider { border: none; border-top: 1px solid #eee; margin: 18px 0; }
+
+    /* ── POLITIQUE ── */
+    .policy-section { margin-bottom: 16px; }
+
+    .policy-title {
+      font-size: 8px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: #2a2a2a;
+      border-left: 2px solid #000;
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+
+    .policy-items { display: flex; flex-direction: column; gap: 4px; }
+
+    .policy-item {
+      font-size: 9px;
+      color: #2a2a2a;
+      line-height: 1.5;
+      padding-left: 12px;
+      position: relative;
+    }
+
+    .policy-item::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #888;
+      font-size: 9px;
+    }
+
+    .policy-item strong { font-weight: 600; color: #000; }
+
+    /* ── DISCLAIMER ── */
+    .disclaimer {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 3px;
+      font-size: 9px;
+      color: #2a2a2a;
+      line-height: 1.55;
+      font-style: italic;
+    }
+
+    /* ── ACTIONS ── */
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 32px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px 16px;
+      font-family: var(--font);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    .btn:hover { opacity: 0.75; }
+
+    .btn-print {
+      background: var(--black);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-back {
+      background: transparent;
+      color: var(--black);
+      border: 1px solid var(--black);
+    }
+
+    .doc-footer {
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px solid #eee;
+      font-size: 10px;
+      color: #2a2a2a;
+      text-align: center;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 50px 0;
+      color: #bbb;
+      font-size: 14px;
+    }
+
+    .empty-state a { color: var(--black); text-decoration: none; border-bottom: 1px solid var(--black); }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: white; padding: 0; margin: 0; }
+      .page { box-shadow: none; padding: 16px 20px; max-width: 100%; width: 210mm; min-height: 297mm; }
+      .actions { display: none; }
+      @page { size: A5; margin: 10mm; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═══════════════ EN-TÊTE ═══════════════ -->
+  <div class="doc-header">
+    <div>
+      <div class="brand-logo">SIPAMO</div>
+      <div class="brand-tagline">La qualité à petit prix</div>
+
+    </div>
+    <div class="doc-meta">
+      <div class="doc-type">Bon de commande</div>
+      <div id="doc-ref">Réf. —</div>
+      <div id="doc-date">—</div>
+      <div>Tél : +237 620 41 29 21</div>
+      <div><a href="mailto:societe@sipamo.site">societe@sipamo.site</a> · <a href="mailto:contact@sipamo.site">contact@sipamo.site</a></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ INFOS SOCIÉTÉ + CLIENT ═══════════════ -->
+  <div class="company-row">
+    <div class="company-block">
+      <strong>SIPAMO SARL</strong>
+      Capital social : 100 000 F CFA<br>
+      RC : CM-NSI-01-2025-B13-01359<br>
+      NIU : M092518071045E<br>
+      Siège : Melen, Yaoundé, Cameroun
+    </div>
+    <div class="client-block" id="client-block" style="display:none;">
+      <span class="client-label">Client</span>
+      <div id="client-details"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ BADGE ═══════════════ -->
+  <div class="badge-provisoire">⚠ Document provisoire — non contractuel.<br> Total Melen est un point de retrait. </div>
+
+  <!-- ═══════════════ ARTICLES ═══════════════ -->
+  <div class="section-label">Articles sélectionnés</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Article</th>
+        <th class="c col-qty">Qté</th>
+        <th class="r col-pu">Prix unit.</th>
+        <th class="r col-total">Montant brut</th>
+      </tr>
+    </thead>
+    <tbody id="items-body"></tbody>
+  </table>
+
+  <!-- ═══════════════ TOTAUX ═══════════════ -->
+  <div class="totals-block">
+    <div id="promo-note" style="display:none;"></div>
+
+    <div class="total-row">
+      <span>Total brut</span>
+      <span id="total-brut">—</span>
+    </div>
+    <div class="total-row remise" id="row-remise" style="display:none;">
+      <span>Remise appliquée</span>
+      <span id="total-remise">—</span>
+    </div>
+    <div class="total-row" id="row-livraison" style="display:none;">
+      <span>Frais de livraison <small id="livraison-zone" style="color:#aaa; font-size:11px;"></small></span>
+      <span id="total-livraison">—</span>
+    </div>
+    <div class="total-row net">
+      <span>Net à payer <em style="font-weight:300; font-size:12px;">(frais de livraison inclus)</em></span>
+      <span id="grand-total">—</span>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════ CONDITIONS ═══════════════ -->
+  <div class="policy-section">
+    <div class="policy-title">i. clauses fiscales et de paiement</div>
+    <div class="policy-items">
+      <div class="policy-item"><strong>Régime fiscal :</strong> Exonération de TVA — régime de l'Impôt Général Synthétique (IGS).</div>
+      <div class="policy-item"><strong>Modalités de paiement :</strong> Paiement comptant à réception (Espèces ou Mobile Money). Pour toute commande hors Yaoundé, paiement intégral préalable requis, frais de livraison inclus.</div>
+      <div class="policy-item"><strong>En cas de retard :</strong> Commande réservée pendant 5 jours. Passé ce délai, sans réception du règlement, la commande est automatiquement annulée et les articles remis en vente.</div>
+      <div class="policy-item"><strong>Réserve de propriété :</strong> Les marchandises restent la propriété de SIPAMO SARL jusqu'au paiement intégral du prix.</div>
+      <div class="policy-item"><strong>Mention CGA :</strong> Acceptant le règlement des sommes dues en sa qualité de membre d'un centre de gestion agréé par l'administration fiscale.</div>
+    </div>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-title">ii. livraison et transport</div>
+    <div class="policy-items">
+      <div class="policy-item"><strong>Délai de fabrication :</strong> 48 h minimum — livraison à partir du surlendemain de la commande.</div>
+      <div class="policy-item"><strong>Frais locaux (Yaoundé) :</strong> De 500 à 2 500 FCFA selon la zone, à la charge du client, réglés avant enlèvement.</div>
+      <div class="policy-item"><strong>Hors Yaoundé :</strong> Paiement intégral de la facture exigé avant expédition, frais d'envoi jusqu'à l'agence de transport inclus.</div>
+      <div class="policy-item"><strong>Livraison gratuite :</strong> Offerte pour toute commande dont le montant net dépasse 50 000 FCFA.</div>
+      <div class="policy-item"><strong>Colis non arrivé :</strong> Si l'agence de livraison confirme par écrit une perte ou un vol, SIPAMO SARL réexpédie un nouvel article à ses frais. Aucun remboursement sans confirmation écrite de l'agence.</div>
+      <div class="policy-item"><strong>Colis endommagé :</strong> Signalez tout dommage visible immédiatement à la réception. SIPAMO SARL prend en charge le retour et la réexpédition sans surcoût.</div>
+      <div class="policy-item"><strong>Suivi commande :</strong> Vous serez contacté sur WhatsApp au <strong>+237 620 41 29 21</strong> pour confirmer la livraison.</div>
+    </div>
+  </div>
+
+  <div class="policy-section">
+    <div class="policy-title">iii. vente, retours et garantie</div>
+    <div class="policy-items">
+      <div class="policy-item"><strong>Vente ferme :</strong> Les marchandises vendues ne sont ni reprises ni échangées pour simple convenance (erreur de taille, changement d'avis).</div>
+      <div class="policy-item"><strong>Remboursement pour défaut :</strong> Un remboursement total est accordé uniquement en cas de défaut de confection avéré, sous condition que l'article soit retourné sous 7 jours après réception et n'ait jamais été porté.</div>
+      <div class="policy-item"><strong>Garantie légale :</strong> La garantie légale des vices cachés demeure applicable conformément à la législation OHADA / Cameroun.</div>
+      <div class="policy-item"><strong>Paiement à la livraison :</strong> Espèces ou Mobile Money uniquement. Virement bancaire accepté pour les commandes hors Yaoundé.</div>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    Ce document est un bon de commande provisoire et ne constitue pas une facture définitive. Il récapitule votre sélection avant validation et paiement. SIPAMO SARL se réserve le droit de modifier les prix et disponibilités sans préavis. Document valable 15 jours.
+  </div>
+
+  <!-- ═══════════════ ACTIONS ═══════════════ -->
+  <div class="actions">
+    <button class="btn btn-print" onclick="window.print()">
+      <i class="fas fa-print"></i> Imprimer / PDF
+    </button>
+    <a href="panier.html" class="btn btn-back">
+      ← Retour au panier
+    </a>
+  </div>
+
+  <!-- ═══════════════ PIED DE PAGE ═══════════════ -->
+  <div class="doc-footer">
+    SIPAMO SARL · Melen, Yaoundé, Cameroun · societe@sipamo.site · contact@sipamo.site · +237 620 41 29 21
+  </div>
+
+</div><!-- /.page -->
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function () {
+  /* ── Utilitaires ── */
+  function esc(str) {
+    if (str == null) return '';
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  }
+
+  /* ── Formule de prix SIPAMO (identique à script-unified.js) ── */
+  function calculateTotals(cart) {
+    const n = cart.reduce((acc, item) => acc + (Number(item.qty) || 0), 0);
+    if (n === 0) return { total: 0, perItemTotals: [] };
+    const S = cart.reduce((acc, item) => acc + (Number(item.price) || 0) * (Number(item.qty) || 0), 0);
+    const Bavg = S / n;
+    let P = n >= 4 ? n * (0.8 * Bavg) : n * (Bavg - 500) + 500;
+    P = Math.max(0, Math.round(P));
+    const scale = S > 0 ? P / S : 1;
+    const perItemTotals = cart.map(item =>
+      Math.round((Number(item.price) || 0) * (Number(item.qty) || 0) * scale)
+    );
+    const diff = P - perItemTotals.reduce((a, b) => a + b, 0);
+    if (diff !== 0 && perItemTotals.length > 0)
+      perItemTotals[perItemTotals.length - 1] += diff;
+    return { total: P, perItemTotals };
+  }
+
+  /* ── Référence et date (générées ici, avant soumission) ── */
+  const ref   = 'SIP-' + Math.floor(Date.now() / 1000);
+  const today = new Date().toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' });
+  const todayISO = new Date().toISOString().slice(0,10).replace(/-/g,'');
+  document.getElementById('doc-ref').textContent = 'Réf. ' + ref;
+  document.getElementById('doc-date').textContent = today;
+  // Nom du fichier lors de l'impression : date_référence
+  document.title = todayISO + '_' + ref;
+
+  /* ── Panier : localStorage['sipamoCart'] — posé par script-unified.js ── */
+  let cart = [];
+  try { cart = JSON.parse(localStorage.getItem('sipamoCart')) || []; } catch (e) {}
+
+  /* ── Infos client : sessionStorage['sipamo_order_client'] ou localStorage['sipamo_user_form'] ── */
+  let client = {};
+  try {
+    const s1 = sessionStorage.getItem('sipamo_order_client');
+    if (s1) client = JSON.parse(s1);
+  } catch (e) {}
+
+  // Fallback sur sipamo_user_form (sauvegarde auto du formulaire)
+  if (!client.name) {
+    try {
+      const s2 = localStorage.getItem('sipamo_user_form');
+      if (s2) client = JSON.parse(s2);
+    } catch (e) {}
+  }
+
+  // Si une référence est fournie dans l'URL, charger cette commande à la place du panier courant
+  const urlParams = new URLSearchParams(window.location.search);
+  const refParam = urlParams.get('ref');
+
+  const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxn9QPt9aODT0riL0S0IAobdV_CZu3dHe1s-nyNd9ZaxGdARVPVVSzV5TJu6aOK_7sB/exec';
+
+  async function chargerBonCommande() {
+    if (refParam) {
+      let orderData = null;
+
+      // 1. On cherche d'abord dans le téléphone du client (méthode classique)
+      try {
+        const savedOrder = localStorage.getItem('order_' + refParam);
+        if (savedOrder) orderData = JSON.parse(savedOrder);
+      } catch (e) {
+        console.warn('Impossible de charger la commande depuis localStorage', e);
+      }
+
+      // 2. Si le document n'est pas sur l'appareil (c'est toi qui l'ouvre), on interroge Google Sheets
+      if (!orderData) {
+        try {
+          // Petit message de patience pendant la connexion
+          document.body.insertAdjacentHTML('afterbegin', '<div id="loading-api" style="text-align:center; padding:20px; font-weight:600;">Récupération du bon de commande SIPAMO...</div>');
+
+          const response = await fetch(`${GOOGLE_SHEETS_URL}?ref=${refParam}`);
+          const result = await response.json();
+
+          if (result.success && result.data) {
+            orderData = JSON.parse(result.data);
+            document.getElementById('loading-api').remove();
+          }
+        } catch (err) {
+          console.error("Erreur serveur", err);
+          const el = document.getElementById('loading-api');
+          if (el) el.remove();
+        }
+      }
+
+      // Appliquer les données de la commande trouvée
+      if (orderData) {
+        if (orderData.cart) cart = orderData.cart;
+        if (orderData.client) client = orderData.client;
+        if (orderData.deliveryDate) client.deliveryDate = orderData.deliveryDate;
+        if (orderData.deliveryTime) client.deliveryTime = orderData.deliveryTime;
+        document.getElementById('doc-ref').textContent = 'Réf. ' + refParam;
+        document.title = todayISO + '_' + refParam;
+      } else {
+        document.body.innerHTML = '<div class="empty-state">Commande introuvable pour la référence <strong>' + esc(refParam) + '</strong>.<br><a href="index.html">← Retour à l\'accueil</a></div>';
+        return;
+      }
+    }
+
+  /* ── Frais de livraison depuis delivery-system.js (si chargé) ── */
+  // On recalcule depuis les données client pour être autonome
+  const FREE_DELIVERY_THRESHOLD = 50000;
+  const DELIVERY_TARIFFS = {
+    'Edéa':2000,'Obala':2000,'Mbalmayo':2000,'Akonolinga':2000,'Eséka':2000,
+    'Douala':2500,'Ebolowa':2500,'Sangmélima':2500,'Bafoussam':2500,'Bangangté':2500,
+    'Foumban':3000,'Dschang':3000,'Kribi':3000,'Bertoua':3000,
+    'Nkongsamba':3500,'Melong':3500,'Manjo':3500,'Penja':3500,'Mbanga':3500,
+    'Buea':3500,'Limbe':3500,'Tiko':3500,'Kumba':3500,'Muyuka':3500,
+    'Bamenda':4000,'Ngaoundéré':4000,'Meiganga':4000,'Ambam':4000,'Lolodorf':4000,
+    'Batouri':5000,'Tibati':5000,'Garoua':5500,'Banyo':5500,'Tignère':5500,
+    'Poli':5500,'Wum':5500,'Mamfe':5500,'Fontem':5500,'Fundong':5500,'Nkambe':5500,
+    'Maroua':6000,'Guider':6000,'Kaélé':6000,'Yagoua':6000,'Mora':6000,
+    'Mokolo':7000,'Idenau':7000,'Campo':7000,'Mintom':7000,'Kousséri':7500
+  };
+  const YAONDE_QUARTIERS = {
+    'zone-proche':   { price:500,  name:'Zone Proche (0-3 km)',           quartiers:['Melen','Ngoa-Ekellé','Obili','Mokolo','La Briqueterie','La Brique','Etoug-Ebé','Ekoudou','Biyem-Assi'] },
+    'zone-moyenne':  { price:1000, name:'Zone Moyenne (3-7 km)',          quartiers:['Tsinga','Nkomkana','TKC','Etoa-Meki','Cité Verte','Nlongkak','Nsimeyong','Quartier Fouda','Mvog-Mbi','Madagascar','Mvog-Ada','Efoulan','Bastos','Dakar','Essos','Nkoldongo','Mendong','Mballa I','Mballa II','Mballa III','Mballa IV','Mballa V','Mballa VI','Kondengui','Oliga','Nsam','Djoungolo','Mfandena','Oyom-Abang','Ekounou','Tongolo','Simbock','Ngousso','Etoudi'] },
+    'zone-eloignee': { price:1500, name:'Zone Éloignée (7-10 km)',        quartiers:['Mvan','Nkolbisson','Awae','Eleveur','Nkolmesseng','Emana','Minkoameyos','Odza','Messamendongo','Borne 10','Ahala','Borne 12'] },
+    'zone-grande':   { price:2000, name:'Zone Grand Rayon (+10 km)',      quartiers:['Biteng','Mbatu','Olembé','Ntinga','Ndamvout','Nkolda','Nyom'] },
+    'zone-periphe':  { price:2500, name:'Zone Périphérique (Sortie ville)',quartiers:['Soa','Nsimalen','Aéroport','Mbankomo','Nomayos','Otop'] }
+  };
+
+  function getZoneByQuartier(q) {
+    if (!q) return null;
+    const ql = q.trim().toLowerCase();
+    for (const [, zoneData] of Object.entries(YAONDE_QUARTIERS)) {
+      for (const name of zoneData.quartiers) {
+        if (name.toLowerCase() === ql) return zoneData;
+      }
+    }
+    return null;
+  }
+
+  /* ── Calculs ── */
+  const sip       = calculateTotals(cart);
+  const totalBrut = cart.reduce((acc, item) => acc + (Number(item.price) || 0) * (Number(item.qty) || 0), 0);
+  const remise    = totalBrut - sip.total;
+
+  // Frais de livraison
+  let deliveryFee     = 0;
+  let deliveryZoneStr = '';
+  const ville         = client.city || '';
+  if (ville === 'Yaoundé') {
+    const zone = getZoneByQuartier(client.quartier || '');
+    if (zone) { deliveryFee = zone.price; deliveryZoneStr = zone.name; }
+  } else if (DELIVERY_TARIFFS[ville]) {
+    deliveryFee = DELIVERY_TARIFFS[ville];
+    deliveryZoneStr = ville;
+  }
+  if (totalBrut >= FREE_DELIVERY_THRESHOLD) deliveryFee = 0;
+
+  const grandTotal = sip.total + deliveryFee;
+
+  /* ── Affichage du bloc client ── */
+  if (client.name) {
+    const delivDateFR = client.deliveryDate
+      ? new Date(client.deliveryDate + 'T00:00:00')
+          .toLocaleDateString('fr-FR', { year:'numeric', month:'long', day:'numeric' })
+      : '';
+
+    let cHtml = '<strong>' + esc(client.name) + '</strong>';
+    if (client.phone) cHtml += esc(client.phone) + '<br>';
+    if (client.email) cHtml += esc(client.email) + '<br>';
+    if (client.city) {
+      cHtml += esc(client.city);
+      if (client.quartier) cHtml += ' — ' + esc(client.quartier);
+      cHtml += '<br>';
+    }
+    if (delivDateFR) cHtml += 'Livraison : ' + delivDateFR;
+    if (client.deliveryTime) cHtml += ' · ' + esc(client.deliveryTime);
+
+    document.getElementById('client-details').innerHTML = cHtml;
+    document.getElementById('client-block').style.display = 'block';
+  }
+
+  /* ── Tableau articles ── */
+  const tbody = document.getElementById('items-body');
+  if (cart.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state">Votre panier est vide. <a href="produits.html?cat=all">Découvrir la collection</a></div></td></tr>';
+  } else {
+    tbody.innerHTML = cart.map((item, i) => {
+      const qty     = Number(item.qty)   || 0;
+      const price   = Number(item.price) || 0;
+      const brut    = qty * price;
+      return `
+        <tr>
+          <td>
+            <div class="item-name">${esc(item.name)}</div>
+            <div class="item-details">${esc(item.size || '—')} · ${esc(item.color || '—')}</div>
+          </td>
+          <td class="c col-qty">${qty}</td>
+          <td class="r col-pu">${price.toLocaleString('fr-FR')} FCFA</td>
+          <td class="r col-total">${brut.toLocaleString('fr-FR')} FCFA</td>
+        </tr>`;
+    }).join('');
+  }
+
+  /* ── Totaux ── */
+  document.getElementById('total-brut').textContent = totalBrut.toLocaleString('fr-FR') + ' FCFA';
+
+  if (remise > 0) {
+    document.getElementById('total-remise').textContent = '−' + remise.toLocaleString('fr-FR') + ' FCFA';
+    document.getElementById('row-remise').style.display = 'flex';
+  }
+
+  const rowLiv = document.getElementById('row-livraison');
+  if (ville) {
+    rowLiv.style.display = 'flex';
+    if (totalBrut >= FREE_DELIVERY_THRESHOLD) {
+      document.getElementById('total-livraison').textContent = 'Gratuit';
+      rowLiv.className = 'total-row gratuit';
+    } else if (deliveryFee > 0) {
+      document.getElementById('total-livraison').textContent = deliveryFee.toLocaleString('fr-FR') + ' FCFA';
+      document.getElementById('livraison-zone').textContent  = '— ' + deliveryZoneStr;
+      rowLiv.className = 'total-row livraison';
+    } else if (ville === 'Yaoundé' && !client.quartier) {
+      document.getElementById('total-livraison').textContent = 'Selon quartier';
+      rowLiv.className = 'total-row livraison';
+    }
+  }
+
+  document.getElementById('grand-total').textContent = grandTotal.toLocaleString('fr-FR') + ' FCFA';
+
+  /* ── Note promo ── */
+  const totalQty = cart.reduce((acc, item) => acc + (Number(item.qty) || 0), 0);
+  const noteEl   = document.getElementById('promo-note');
+  if (noteEl) {
+    if (totalQty >= 4) {
+      noteEl.textContent = '🎉 Remise groupée appliquée (−20 % sur le prix unitaire moyen)';
+      noteEl.style.display = 'block';
+    } else if (totalQty >= 2) {
+      noteEl.textContent = '💡 À partir de 4 articles, bénéficiez de −20 % sur le total.';
+      noteEl.style.display = 'block';
+    }
+  }
+
+  } // fin chargerBonCommande()
+
+  chargerBonCommande();
+
+})(); // fin IIFE
+</script>
+</body>
+</html>
